@@ -1,3 +1,9 @@
+## Requirements
+To run the project is necessary to install the nodejs and the npm packet manager.
+
+## Running the project
+First the dev must clone the repository and enters in it, after that run the `npm install`. After that the dev can run the other scripts available down bellow:
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

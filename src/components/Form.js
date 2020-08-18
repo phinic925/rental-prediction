@@ -31,8 +31,17 @@ class Form extends React.Component {
   }
 
   handleSubmit(event) {
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+    };
+    fetch('https://jsonplaceholder.typicode.com/posts', requestOptions)
+        .then(response => response.json())
+        .then(data => this.setState({ data: data }));
     console.log(this.state);
-    alert("Submited");
+    alert("Submitted");
     event.preventDefault();
   }
 

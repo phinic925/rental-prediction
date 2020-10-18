@@ -1,20 +1,28 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+
+function renderResponse(response) {
+  ReactDOM.render( <h1> {response['fulfillmentText']}</h1>, document.getElementById("response"));
+
+}
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      FormCity: "",
-      FormRoom: "",
-      FormBathroom: "",
-      FormParking: "",
-      FormFloor: "",
-      FormAnimal: "",
-      FormFurniture: "",
-      FormHoa: "",
-      FormTax: "",
-      FormFire: "",
+      city: "São paulo",
+      rooms: 2,
+      bathroom: 2,
+      parkings: 1,
+      floor: 8,
+      animal: "sim",
+      furniture: "não",
+      hoa: 400,
+      tax: 30,
+      fire: 10,
+      area: 80,
+      data: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,22 +37,29 @@ class Form extends React.Component {
       [name]: value,
     });
   }
-
   handleSubmit(event) {
+    var requestData = require('./data.json');
+    requestData['queryResult']['parameters'] = this.state;
     // Simple POST request with a JSON body using fetch
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'React POST Request Example' })
+        body: JSON.stringify(requestData)
     };
-    fetch('https://jsonplaceholder.typicode.com/posts', requestOptions)
+    console.log(JSON.stringify(requestData))
+    // componentDidMount();
+    try {
+      fetch('http://127.0.0.1:5000/rentalparameters', requestOptions)
         .then(response => response.json())
-        .then(data => this.setState({ data: data }));
-    console.log(this.state);
-    alert("Submitted");
+        .then(json => renderResponse(json));
+
+      }
+      catch (error) {
+        console.error(error);}
+
+    console.log(this.state.data);
     event.preventDefault();
   }
-
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -52,8 +67,8 @@ class Form extends React.Component {
           Cidade:
           <input
             type="text"
-            name="FormCity"
-            value={this.state.FormCity}
+            name="city"
+            value={this.state.city}
             onChange={this.handleChange}
           />
         </label>
@@ -61,9 +76,9 @@ class Form extends React.Component {
         <label>
           Quartos:
           <input
-            type="text"
-            name="FormRoom"
-            value={this.state.FormRoom}
+            type="number"
+            name="rooms"
+            value={this.state.rooms}
             onChange={this.handleChange}
           />
         </label>
@@ -71,9 +86,9 @@ class Form extends React.Component {
         <label>
           Banheiros:
           <input
-            type="text"
-            name="FormBathroom"
-            value={this.state.FormBathroom}
+            type="number"
+            name="bathroom"
+            value={this.state.bathroom}
             onChange={this.handleChange}
           />
         </label>
@@ -81,9 +96,9 @@ class Form extends React.Component {
         <label>
           Vagas de estacionamento:
           <input
-            type="text"
-            name="FormParking"
-            value={this.state.FormParking}
+            type="number"
+            name="parkings"
+            value={this.state.parkings}
             onChange={this.handleChange}
           />
         </label>
@@ -91,9 +106,9 @@ class Form extends React.Component {
         <label>
           Quantidade de andares:
           <input
-            type="text"
-            name="FormFloor"
-            value={this.state.FormFloor}
+            type="number"
+            name="floor"
+            value={this.state.floor}
             onChange={this.handleChange}
           />
         </label>
@@ -102,8 +117,8 @@ class Form extends React.Component {
           Permite animais:
           <input
             type="text"
-            name="FormAnimal"
-            value={this.state.FormAnimal}
+            name="animal"
+            value={this.state.animal}
             onChange={this.handleChange}
           />
         </label>
@@ -112,8 +127,8 @@ class Form extends React.Component {
           Mobilhado :
           <input
             type="text"
-            name="FormFurniture"
-            value={this.state.FormFurniture}
+            name="furniture"
+            value={this.state.furniture}
             onChange={this.handleChange}
           />
         </label>
@@ -121,9 +136,9 @@ class Form extends React.Component {
         <label>
           HOA:
           <input
-            type="text"
-            name="FormHoa"
-            value={this.state.FormHoa}
+            type="number"
+            name="hoa"
+            value={this.state.hoa}
             onChange={this.handleChange}
           />
         </label>
@@ -131,9 +146,9 @@ class Form extends React.Component {
         <label>
           Tax:
           <input
-            type="text"
-            name="FormTax"
-            value={this.state.FormTax}
+            type="number"
+            name="tax"
+            value={this.state.tax}
             onChange={this.handleChange}
           />
         </label>
@@ -141,13 +156,22 @@ class Form extends React.Component {
         <label>
           Proteção a incendio:
           <input
-            type="text"
-            name="FormFire"
-            value={this.state.FormFire}
+            type="number"
+            name="fire"
+            value={this.state.fire}
             onChange={this.handleChange}
           />
         </label>
         <br />
+        <label>
+          Área:
+          <input
+            type="number"
+            name="area"
+            value={this.state.area}
+            onChange={this.handleChange}
+          />
+        </label>
         <input type="submit" value="Submit" />
       </form>
     );

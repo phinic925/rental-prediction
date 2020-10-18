@@ -1,0 +1,20 @@
+POST http://127.0.0.1:5000/rentalparameters HTTP/1.1
+content-type: application/json
+
+{
+  "queryResult": {
+    "parameters": {
+      "parkings": 1,
+      "fire": 10,
+      "animal": "sim",
+      "tax": 30,
+      "furniture": "não",
+      "bathroom": 2,
+      "floor": 8,
+      "hoa": 400,
+      "city": "São paulo",
+      "area": 80,
+      "rooms": 2
+    }
+  }
+}
